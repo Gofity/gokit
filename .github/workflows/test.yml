@@ -1,0 +1,29 @@
+name: Test DBO
+
+on:
+  push:
+    branches: [ master, develop ]
+
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.25'
+
+    - name: Clean test cache
+      run: go clean -testcache
+
+    - name: Install modules
+      run: go mod download
+
+    - name: Run DBO Tests
+      run: go test ./tests -v

@@ -223,13 +223,16 @@ func (x *Array[T]) Shift() (v T, ok bool) {
 	return
 }
 
-func (x *Array[T]) Join(separator string) (v string) {
+func (x *Array[T]) Join(separator string) (v String) {
+	sep := String(separator)
+
 	for i, item := range *x {
 		if i > 0 {
-			v += separator
+			v += sep
 		}
 
-		v += fmt.Sprint(item)
+		data := fmt.Sprint(item)
+		v += String(data)
 	}
 
 	return

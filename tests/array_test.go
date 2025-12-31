@@ -196,7 +196,7 @@ func (x *ArrayTestSuite) TestShift() {
 func (x *ArrayTestSuite) TestJoin() {
 	data := gokit.Array[int]{1, 2, 3, 4, 5}
 
-	expected := "1-2-3-4-5"
+	expected := gokit.String("1-2-3-4-5")
 	require.Equal(x.T(), expected, data.Join("-"))
 }
 

@@ -24,6 +24,10 @@ func (x *Array[T]) At(index int) (v T, ok bool) {
 	return
 }
 
+func (x *Array[T]) Contains(v T) bool {
+	return slices.Contains(*x, v)
+}
+
 func (x *Array[T]) Equal(v Array[T]) bool {
 	return slices.Equal(*x, v)
 }

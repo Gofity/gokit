@@ -18,7 +18,7 @@ type xGraceful struct {
 	exiting bool
 }
 
-func (x *xGraceful) Run(callback Runner) {
+func (x *xGraceful) Run(callback Runner) (err error) {
 	if x.isExiting() {
 		return
 	}
@@ -27,7 +27,7 @@ func (x *xGraceful) Run(callback Runner) {
 
 	defer d(x).remove()
 
-	callback(x.ctx)
+	return callback(x.ctx)
 }
 
 func (x *xGraceful) Start() {

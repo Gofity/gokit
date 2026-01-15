@@ -28,3 +28,7 @@ func Run(callback ...Runner) (err error) {
 
 	return
 }
+
+func IsExiting() bool {
+	return instance.isExiting()
+}

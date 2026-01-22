@@ -83,3 +83,11 @@ func (x String) TrimSuffix(suffix string) String {
 func (x String) TrimAffix(affix string) String {
 	return x.TrimPrefix(affix).TrimSuffix(affix)
 }
+
+func (x String) HasPrefix(prefix string) bool {
+	return strings.HasPrefix(string(x), prefix)
+}
+
+func (x String) HasSuffix(suffix string) bool {
+	return strings.HasSuffix(string(x), suffix)
+}

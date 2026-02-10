@@ -6,7 +6,7 @@ import (
 	"runtime"
 )
 
-type PathFn func() (path String, err error)
+type PathFn func() (path string, err error)
 
 type xPath struct{}
 
@@ -14,20 +14,20 @@ func (x xPath) Delim() string {
 	return string([]rune{os.PathSeparator})
 }
 
-func (x xPath) Join(paths ...any) String {
+func (x xPath) Join(paths ...any) string {
 	delim := x.Delim()
 
-	return JoinFn(delim, paths, func(v String) String {
-		return v.TrimAffix(delim)
+	return JoinFn(delim, paths, func(v string) string {
+		return String(v).TrimAffix(delim).String()
 	})
 }
 
-func (x xPath) JoinPrefixed(paths ...any) String {
+func (x xPath) JoinPrefixed(paths ...any) string {
 	result := x.Join(paths...)
-	return String(x.Delim()) + result
+	return x.Delim() + result
 }
 
-func (x xPath) FromExecutable(paths ...any) (file String, err error) {
+func (x xPath) FromExecutable(paths ...any) (file string, err error) {
 	return x.get(
 		x.getExecPathFromArgs(paths...),
 		x.getExecPathFromCaller(0, paths...),
@@ -56,7 +56,7 @@ func (x xPath) IsFile(file string) bool {
 	return !info.IsDir()
 }
 
-func (x xPath) get(fns ...PathFn) (path String, err error) {
+func (x xPath) get(fns ...PathFn) (path string, err error) {
 	for _, fn := range fns {
 		path, err = fn()
 
@@ -64,7 +64,7 @@ func (x xPath) get(fns ...PathFn) (path String, err error) {
 			continue
 		}
 
-		if x.IsFile(string(path)) {
+		if x.IsFile(path) {
 			break
 		}
 	}
@@ -73,30 +73,30 @@ func (x xPath) get(fns ...PathFn) (path String, err error) {
 }
 
 func (x xPath) getExecPathFromCaller(skip int, paths ...any) PathFn {
-	return func() (path String, err error) {
+	return func() (path string, err error) {
 		_, file, _, _ := runtime.Caller(skip)
 		return x.getAbsolutePathFromFile(file, paths...)
 	}
 }
 
 func (x xPath) getExecPathFromArgs(paths ...any) PathFn {
-	return func() (path String, err error) {
+	return func() (path string, err error) {
 		return x.getAbsolutePathFromFile(os.Args[0], paths...)
 	}
 }
 
 func (x xPath) getExecPathFromSource(paths ...any) PathFn {
-	return func() (path String, err error) {
+	return func() (path string, err error) {
 		return x.getAbsolutePathFromDir("./", paths...)
 	}
 }
 
-func (x xPath) getAbsolutePathFromFile(fromFile string, paths ...any) (path String, err error) {
+func (x xPath) getAbsolutePathFromFile(fromFile string, paths ...any) (path string, err error) {
 	dir := filepath.Dir(fromFile)
 	return x.getAbsolutePathFromDir(dir, paths...)
 }
 
-func (x xPath) getAbsolutePathFromDir(dir string, paths ...any) (path String, err error) {
+func (x xPath) getAbsolutePathFromDir(dir string, paths ...any) (path string, err error) {
 	if dir, err = filepath.Abs(dir); err != nil {
 		return
 	}

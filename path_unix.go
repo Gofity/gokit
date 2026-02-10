@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func (x xPath) Expand(path String) String {
+func (x xPath) Expand(path string) string {
 	if path == "" {
 		return path
 	}
@@ -27,10 +27,10 @@ func (x xPath) Expand(path String) String {
 		path = path[1:]
 	}
 
-	return String(home + os.ExpandEnv(string(path)))
+	return home + os.ExpandEnv(string(path))
 }
 
-func (x xPath) sanitize(path String) (value String) {
+func (x xPath) sanitize(path string) (value string) {
 	defer func() {
 		recover()
 		value = path
@@ -40,7 +40,7 @@ func (x xPath) sanitize(path String) (value String) {
 		return
 	}
 
-	prefixes := Array[String]{"~/", "./", ".."}
+	prefixes := Array[string]{"~/", "./", ".."}
 
 	if !prefixes.Contains(path[:2]) {
 		path = "/" + path

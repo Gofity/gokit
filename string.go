@@ -91,3 +91,7 @@ func (x String) HasPrefix(prefix string) bool {
 func (x String) HasSuffix(suffix string) bool {
 	return strings.HasSuffix(string(x), suffix)
 }
+
+func (x String) String() string {
+	return string(x)
+}

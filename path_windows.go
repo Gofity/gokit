@@ -6,7 +6,7 @@ import (
 	"unicode"
 )
 
-func (x xPath) Expand(path String) String {
+func (x xPath) Expand(path string) string {
 	if path == "" {
 		return path
 	}
@@ -39,9 +39,9 @@ func (x xPath) Expand(path String) String {
 		buff.WriteRune(char)
 	}
 
-	return String(buff.String())
+	return buff.String()
 }
 
-func (x xPath) sanitize(path String) (value String) {
+func (x xPath) sanitize(path string) (value string) {
 	return path
 }

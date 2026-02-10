@@ -70,13 +70,13 @@ func (x *Yaml[T]) ReadFileFS(name string, fsys fs.FS) (value T, err error) {
 }
 
 func (x *Yaml[T]) GetConfigFile(paths ...any) (value T, err error) {
-	var name String
+	var name string
 
 	if name, err = Path.FromExecutable(paths...); err != nil {
 		return
 	}
 
-	value, err = x.ReadFile(string(name))
+	value, err = x.ReadFile(name)
 
 	return
 }

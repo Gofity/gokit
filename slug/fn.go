@@ -1,27 +1,21 @@
-package gokit
+package slug
 
 import (
 	"bytes"
 	"unicode"
 )
 
-type xSlug struct{}
-
-func (x *xSlug) Create(text string, delim ...string) string {
-	separator := "-"
-
-	if len(delim) > 0 && delim[0] != "" {
-		separator = delim[0]
-	}
+func Create(text string, opts Options) string {
+	opts.sanitize()
 
 	var buff bytes.Buffer
 	var separate bool
 
 	for _, char := range text {
 		switch true {
-		case x.an(char):
+		case an(char):
 			if separate {
-				buff.WriteString(separator)
+				buff.WriteString(opts.Delimiter)
 				separate = false
 			}
 
@@ -37,8 +31,6 @@ func (x *xSlug) Create(text string, delim ...string) string {
 }
 
 // Is alphanumeric
-func (x *xSlug) an(char rune) bool {
+func an(char rune) bool {
 	return unicode.IsLetter(char) || unicode.IsNumber(char)
 }
-
-var Slug xSlug

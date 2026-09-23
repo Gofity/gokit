@@ -13,7 +13,7 @@ func Create(text string, opts Options) string {
 
 	for _, char := range text {
 		switch true {
-		case an(char):
+		case alphanumeric(char):
 			if separate {
 				buff.WriteString(opts.Delimiter)
 				separate = false
@@ -30,7 +30,6 @@ func Create(text string, opts Options) string {
 	return buff.String()
 }
 
-// Is alphanumeric
-func an(char rune) bool {
+func alphanumeric(char rune) bool {
 	return unicode.IsLetter(char) || unicode.IsNumber(char)
 }

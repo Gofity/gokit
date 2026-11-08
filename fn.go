@@ -27,14 +27,8 @@ func Copy[T any](data T, handlers ...CopyHander[T]) (v T) {
 }
 
 func Make[T any]() (value T) {
-	xType := reflect.TypeOf(value)
-
-	if xType.Kind() == reflect.Pointer {
-		data := reflect.New(xType.Elem())
-		value = data.Interface().(T)
-	}
-
-	return
+	var ref Type[T]
+	return ref.Make()
 }
 
 func Ptr(v any) any {
